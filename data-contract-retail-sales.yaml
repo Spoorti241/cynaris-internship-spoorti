@@ -1,0 +1,77 @@
+contract:
+  name: retail_sales_data_contract
+  version: 1.0
+  description: Data quality contract for retail sales data
+
+  producer: Data Analyst
+  consumer: BI Dashboard
+
+  dataset:
+    name: retail_sales_dataset
+    format: CSV
+
+  quality_rules:
+    completeness: 100%
+    unique_transaction_id: true
+    valid_age_range: [18, 100]
+    minimum_quantity: 1
+    minimum_price: 0
+    allowed_categories:
+      - Beauty
+      - Clothing
+      - Electronics
+
+  schema:
+    Transaction ID:
+      type: integer
+      required: true
+      unique: true
+
+    Date:
+      type: date
+      required: true
+
+    Customer ID:
+      type: string
+      required: true
+      classification: Pseudonymous Personal Data
+      masking: CUST***
+
+    Gender:
+      type: string
+      required: true
+      classification: Personal Data
+
+    Age:
+      type: integer
+      required: true
+      minimum: 18
+      maximum: 100
+      classification: Personal Data
+
+    Product Category:
+      type: string
+      required: true
+      allowed_values:
+        - Beauty
+        - Clothing
+        - Electronics
+
+    Quantity:
+      type: integer
+      required: true
+      minimum: 1
+
+    Price per Unit:
+      type: number
+      required: true
+      minimum: 0
+
+    Total Amount:
+      type: number
+      required: true
+      minimum: 0
+
+  privacy:
+    policy: Mask or tokenize customer identifiers
+    access: Authorized users only
